@@ -3,8 +3,9 @@
    initScroll();
 });
 
-var scroll;
-var initScroll = _.once(function(){
+var store, scroll,
+    initScroll = _.once(function() {
+    store = window.sessionStorage;
     scroll = new iScroll('wrapper', { 
         checkDOMChanges: true 
     });
@@ -72,18 +73,26 @@ function initRaty(book){
     });
 }
 
-function bindKeys(){
-   $(document).on('keydown', function(e) {
-      if($('.bookdata').length) {
-          var keyCode = e.keyCode || e.which;
-          if(keyCode == 37) {
-             location.href = '#/v/10';
-          }
-          if(keyCode == 39) {
-           location.href = '#/v/26';
-         }
-      }
-   });
+function bindKeys() {
+    $(document).on('keydown', function(e) {
+        if($('.bookdata').length) {
+
+            var list = store.getItem('nav').split(','),
+                id = location.hash.split('/').pop(), 
+                idx = list.indexOf(id),
+                keyCode = e.keyCode || e.which;
+
+            if(keyCode == 37) {            
+                var previd = idx > 0 ? list[idx - 1] : _.last(list);
+                location.href = '#/v/' + previd;
+            }
+
+            if(keyCode == 39) {             
+                var nextid = idx < list.length - 1 ? list[idx + 1] : _.first(list);
+                location.href = '#/v/' + nextid;
+            }
+        }
+    });
 }
 
 Handlebars.registerHelper('IF_EQUAL', function (a, b, opts) {
