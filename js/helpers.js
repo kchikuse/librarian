@@ -1,6 +1,8 @@
 ﻿$(function () {
-   bindKeys();
+   
+   bindEvents();
    initScroll();
+
 });
 
 var store, scroll,
@@ -73,26 +75,65 @@ function initRaty(book){
     });
 }
 
-function bindKeys() {
+function bindEvents() {
+    var el = $('#content').hammer();
+
+    el.on("swipeleft", function() {
+       navigate('L');
+    })
+    .on("swiperight", function() {
+       navigate('R');
+    });
+
     $(document).on('keydown', function(e) {
-        if($('.bookdata').length) {
+        var keyCode = e.keyCode || e.which;
 
-            var list = store.getItem('nav').split(','),
-                id = location.hash.split('/').pop(), 
-                idx = list.indexOf(id),
-                keyCode = e.keyCode || e.which;
+        switch (keyCode) {
+            case 37:
+            navigate('L');
+            break;
 
-            if(keyCode == 37) {            
-                var previd = idx > 0 ? list[idx - 1] : _.last(list);
-                location.href = '#/v/' + previd;
-            }
+            case 39:
+            navigate('R');
+            break;
 
-            if(keyCode == 39) {             
-                var nextid = idx < list.length - 1 ? list[idx + 1] : _.first(list);
-                location.href = '#/v/' + nextid;
-            }
+            case 27:
+            case 36:
+            location.hash = '#/';
+            break;
+        }
+    })
+    .bind('mousewheel', function(e){
+        if(e.originalEvent.wheelDelta / 120 > 0) {
+            navigate('L');
+        }
+        else {
+            navigate('R');
         }
     });
+}
+
+function navigate(direction){
+    if($('.bookdata').length) {
+
+        var list = store.getItem('nav').split(','),
+            id = location.hash.split('/').pop(), 
+            idx = list.indexOf(id);
+
+        if(direction === 'L') {            
+            var previd = idx > 0 ? list[idx - 1] : _.last(list);
+            go(previd);
+        }
+
+        if(direction === 'R') {             
+            var nextid = idx < list.length - 1 ? list[idx + 1] : _.first(list);
+            go(nextid);
+        }
+    }
+}
+
+function go(id) {
+    location.hash = '#/v/' + id;
 }
 
 Handlebars.registerHelper('IF_EQUAL', function (a, b, opts) {
