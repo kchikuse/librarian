@@ -1,0 +1,48 @@
+<section class="ff-container" id="detail-view">      
+<div class="spacer"></div>
+<div class="clr"></div>
+<div class="ff-preview">
+<img src="covers/{{Thumbnail}}}" class="bookcover drop-shadow" />
+<div class="bookdata">
+	<table>
+		<tbody>
+			<tr>
+				<td>
+					<h2>{{Title}}</h2>
+				</td>
+			</tr>
+			<tr>
+				<td>{{ISBN}}</td>
+			</tr>
+			<tr>
+				<td>{{Author}}</td>
+			</tr>
+			<tr>
+				<td>{{Publisher}}</td>
+			</tr>
+			<tr>
+				<td>
+					{{PageCount}} pages 
+					{{#IF_EQUAL HasRead 1 }}
+	                    <img src="assets/read.png" />
+	                {{/IF_EQUAL}}
+				</td>
+			</tr>					
+			<tr>
+				<td>{{Description}}</td>
+			</tr>
+			<tr>
+				<td>
+					<em>{{Notes}}</em>
+				</td>
+			</tr>		
+		    <tr>
+				<td>
+					<div id="rating"></div>
+				</td>
+			</tr>	
+		</tbody>
+	</table>
+</div>
+</div>
+</section>

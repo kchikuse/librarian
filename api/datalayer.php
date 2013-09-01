@@ -12,4 +12,9 @@ function GetBook($id) {
 	return R::getRow('SELECT * FROM Books WHERE Id = :id', array(':id' => $id)); 
 }
 
+function SaveRating($id, $score) {
+	R::exec('UPDATE Books SET Rating = :score WHERE Id = :id', 
+		array(':id' => $id, ':score' => $score));
+}
+
 ?>
