@@ -15,6 +15,8 @@ function GetBook($id) {
 function SaveRating($id, $score) {
 	R::exec('UPDATE Books SET Rating = :score WHERE Id = :id', 
 		array(':id' => $id, ':score' => $score));
+
+	return $score;
 }
 
 ?>

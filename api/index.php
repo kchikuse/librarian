@@ -13,11 +13,10 @@ $app->get("/:id", function ($id) {
 	echo json_encode( GetBook($id) );
 });
 
-$app->post("/rate", function () use ($app) {
-	$req = $app->request();
-	$id = $req->post('id');
-	$score = $req->post('score');
-    echo json_encode( SaveRating($id, $score) );
+$app->put("/rate", function () use ($app) {
+    $test = json_decode($app->getInstance()->request()->getBody());
+
+    echo print_r($test);//json_encode( SaveRating($id, $score) );
 });
 
 

@@ -14,13 +14,11 @@
 	<div class="clr"></div>
 
 	<ul class="ff-items">
-		{{#books}}
-			<li class="ff-item-type-2">
-				<a href="#/v/{{Id}}">
-					<span>{{Title}}</span>
-					<img src="covers/{{Thumbnail}}}" />
+			<li class="ff-item-type-2" ng-repeat="book in books">
+				<a href="#/{{ book.Id }}">
+					<span>{{ book.Title }}</span>
+					<img ng-src="covers/{{ book.Thumbnail }}" />
 				</a>
 			</li>
-		{{/books}}
 	</ul>
 </section>
