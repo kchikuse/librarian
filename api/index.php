@@ -14,9 +14,9 @@ $app->get("/:id", function ($id) {
 });
 
 $app->put("/rate", function () use ($app) {
-    $test = json_decode($app->getInstance()->request()->getBody());
-
-    echo print_r($test);//json_encode( SaveRating($id, $score) );
+    $req = $app->getInstance()->request();    
+    $data = json_decode($req->getBody());
+    echo json_encode( SaveRating($data->id, $data->score) );
 });
 
 

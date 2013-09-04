@@ -1,5 +1,5 @@
 ﻿var scroll, 
-    initScroll = _.once(function() {
+	initApp = _.once(function() {    
     scroll = new iScroll('wrapper', { 
         checkDOMChanges: true 
     });

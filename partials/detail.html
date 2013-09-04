@@ -1,44 +1,44 @@
-<section class="ff-container" id="detail-view">      
+<section nav class="ff-container" id="detail-view" tabindex="0">      
 <div class="spacer"></div>
 <div class="clr"></div>
 <div class="ff-preview">
-<img ng-src="covers/{{ book.Thumbnail }}" class="bookcover drop-shadow" />
+<img ng-src="covers/{{ book.Thumbnail }}" ng-show="book.Thumbnail" class="bookcover drop-shadow" />
 <div class="bookdata">
-	<table>
-		<tbody>
-			<tr>
-				<td>
-					<h2>{{ book.Title }}</h2>
-				</td>
-			</tr>
-			<tr>
-				<td>{{ book.ISBN }}</td>
-			</tr>
-			<tr>
-				<td>{{ book.Author }}</td>
-			</tr>
-			<tr>
-				<td>{{ book.Publisher }}</td>
-			</tr>
-			<tr>
-				<td>
-					{{ book.PageCount }} pages 
-					<img ng-src="assets/read.png" ng-show="book.HasRead" />
-				</td>
-			</tr>					
-			<tr>
-				<td>{{ book.Description }}</td>
-			</tr>
-			<tr>
-				<td><em>{{ book.Notes }}</em></td>
-			</tr>		
-		    <tr>
-				<td>
-					<div rate></div>
-				</td>
-			</tr>	
-		</tbody>
-	</table>
+<table>
+	<tbody>
+		<tr>
+			<td>
+				<h2>{{ book.Title }}</h2>
+			</td>
+		</tr>
+		<tr>
+			<td>{{ book.ISBN }}</td>
+		</tr>
+		<tr>
+			<td>{{ book.Author }}</td>
+		</tr>
+		<tr>
+			<td>{{ book.Publisher }}</td>
+		</tr>
+		<tr>
+			<td>
+				{{ book.PageCount }} pages 
+				<img ng-src="assets/read.png" ng-show="book.HasRead" />
+			</td>
+		</tr>					
+		<tr>
+			<td>{{ book.Description }}</td>
+		</tr>
+		<tr>
+			<td><em>{{ book.Notes }}</em></td>
+		</tr>		
+	    <tr>
+			<td>
+				<div rate></div>
+			</td>
+		</tr>	
+	</tbody>
+</table>
 </div>
 </div>
 </section>
