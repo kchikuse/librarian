@@ -5,6 +5,10 @@
     });
 });
 
+	function notify(message) {
+		smoke.alert(message);
+	}
+
 
 $.fn.serializeObject = function () {
     var o = {};

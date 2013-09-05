@@ -128,3 +128,9 @@ a{
 #detail-view {
 	outline: none;
 }
+
+
+.bookcover.over {
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+}

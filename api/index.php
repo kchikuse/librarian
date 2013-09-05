@@ -19,5 +19,11 @@ $app->put("/rate", function () use ($app) {
     echo json_encode( SaveRating($data->id, $data->score) );
 });
 
+$app->put("/cover", function () use ($app) {
+    $req = $app->getInstance()->request();
+    $putdata = $req->getBody();
+    echo json_encode( SaveCover($data) );
+});
+
 
 $app->run();

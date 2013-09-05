@@ -19,4 +19,8 @@ function SaveRating($id, $score) {
 	return $score;
 }
 
+function SaveCover($data) {
+	throw new Exception("Not implemented....", 1);	
+}
+
 ?>
