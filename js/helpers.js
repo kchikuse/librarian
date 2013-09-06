@@ -5,9 +5,9 @@
     });
 });
 
-	function notify(message) {
-		smoke.alert(message);
-	}
+function notify(message) {
+	smoke.alert(message);
+}
 
 
 $.fn.serializeObject = function () {

@@ -8,7 +8,7 @@
 
 }]);
 
-app.controller('BookDetailCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
+app.controller('BookEditCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
     
     $http.get('api/' + $routeParams.id).success(function(book) {
         $scope.book = book;

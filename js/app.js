@@ -7,10 +7,14 @@ app.config(['$routeProvider', function ($routeProvider) {
 			controller: 'BookListCtrl',
 			templateUrl: 'partials/hello.html'
 		}).
+		when('/edit/:id', {
+			controller: 'BookEditCtrl',
+			templateUrl: 'partials/edit.html'
+		}).	
 	    when('/:id', {
-			controller: 'BookDetailCtrl',
+			controller: 'BookEditCtrl',
 			templateUrl: 'partials/detail.html'
-		}).		
+		}).
 		otherwise({
 			redirectTo: '/'
 		});		

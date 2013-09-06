@@ -129,8 +129,44 @@ a{
 	outline: none;
 }
 
+.edit {
+	cursor: hand;
+    cursor: pointer;
+}
+
+a img {
+	border: none;
+}
 
 .bookcover.over {
     filter: alpha(opacity=50);
     opacity: 0.5;
+}
+
+
+textarea{
+	width: 400px;
+	height: 150px;
+}
+
+input[type="text"]{
+	width: 280px;
+	height: 25px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
+input[type="number"] {
+    width: 80px;
+    height: 25px;
 }

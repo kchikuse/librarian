@@ -1,6 +1,7 @@
 ﻿/* stop angular from loading just the folder path and throwing a 404 */
-app.directive('fix', function () {
+app.directive('bookcover', function () {
     return {
+        restrict: 'C',
         link: function (scope, element, attr) {            
             scope.$on('book-loaded', function() {                
                 element.attr('src', element.attr('source') + scope.book.Thumbnail);
@@ -51,57 +52,39 @@ app.directive('rate', ['$http', function ($http) {
 app.directive('nav', ['navService', function (navService) {
     return {
         link: function (scope, element, attr) {            
-            scope.$on('book-loaded', function() {  
-                element.focus().bind('keydown', function (e) {                                   
+            scope.$on('book-loaded', function() { 
+                var id = scope.book.Id; 
+
+                element.focus().bind('keydown', function (e) {                                                       
                     switch (e.keyCode || e.which) {
                         case 37:
-                        nav('L');
+                        navService.nav(id, 'L');
                         break;
 
                         case 39:
-                        nav('R');
+                        navService.nav(id, 'R');
                         break;
 
                         case 27:
                         case 36:
-                        nav();
+                        navService.nav(id);
                         break;
                     }
                 }).bind('mousewheel', function(e) {
-                    nav(e.originalEvent.wheelDelta / 120 > 0 ? 'L' : 'R');
+                    navService.nav(id, e.originalEvent.wheelDelta / 120 > 0 ? 'L' : 'R');
                 });
 
                 var el = $(element).hammer();
 
                 el.on('swipeleft', function() {
-                     nav('L');
+                    navService.nav(id, 'L');
                 });
 
                 el.on('swiperight', function() {
-                     nav('R')
+                    navService.nav(id, 'R')
                 });
             });    
-
-            nav = function(direction) {
-                var list = navService.getBooks(),        
-                    idx = list.indexOf(scope.book.Id);
-
-                if(!direction) {
-                   location.hash = '#/';
-                }
-
-                if(direction === 'L') {            
-                    var previd = idx > 0 ? list[idx - 1] : _.last(list);                                        
-                    location.hash = '#/' + previd;
-                }
-
-                if(direction === 'R') {             
-                    var nextid = idx < list.length - 1 ? list[idx + 1] : _.first(list);
-                    location.hash = '#/' + nextid;                    
-                }
-            }
-        },
-    
+        },    
     };
 }]);
 
@@ -152,3 +135,20 @@ app.directive('drop', ['$window', function ($window) {
         });
     };
 }]);
+
+app.directive('digits', function () {    
+    return {
+        link: function (scope, element, attr) {            
+            element.bind('keydown', function (e) { 
+                if (_.contains([ 8, 9, 13, 27, 46 ], e.keyCode)) {
+                    return;
+                }
+                else {
+                    if (e.shiftKey || (e.keyCode < 48 || e.keyCode > 57) && (e.keyCode < 96 || e.keyCode > 105)) {
+                        e.preventDefault();
+                    }
+                }
+            }); 
+        } 
+    }
+});
