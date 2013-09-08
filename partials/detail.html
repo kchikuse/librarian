@@ -1,8 +1,8 @@
-<section nav class="ff-container animated bounceIn" id="detail-view" tabindex="0">      
+<section browse class="ff-container animated bounceIn" id="detail-view" tabindex="0">      
 	<div class="spacer"></div>
-	<div class="clr"></div>
-	<div class="ff-preview">
-		<img source="covers/" class="bookcover drop-shadow" />
+	<div class="clr"></div>	
+	<div class="ff-preview" ng-show="book.Id">	
+		<img cover source="covers/" class="bookcover drop-shadow" />
 		<div class="bookdata">
 		<table>
 			<tbody>
@@ -16,7 +16,7 @@
 					<img ng-src="assets/edit.png" />
 				</a></td></tr>
 				<tr><td><em>{{ book.Notes }}</em></td></tr>		
-			    <tr><td><div rate></div></td></tr>	
+			    <tr><td><div rating></div></td></tr>	
 			</tbody>
 		</table>
 		</div>

@@ -1,13 +1,14 @@
 <!DOCTYPE HTML>
 <html lang="en" ng-app="bookmodule">
 <head>
-<title>librarian | books are irie</title>
+<title>librarian | books R irie</title>
 <meta charset="utf-8">
 <meta name="author" content="K. Chikuse">
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="stylesheet" href="style/smoke.css" />
 <link rel="stylesheet" href="style/style.css" />
 <link rel="stylesheet" href="style/custom.css" />
+<link rel="stylesheet" href="style/buttons.css" />
 <link rel="stylesheet" href="style/animate.min.css" />
 </head>
 <body>
@@ -18,11 +19,13 @@
           <h1>Home <span>Library</span></h1>
         </header>
         <div init ng-view></div>
+        <div class="load"></div>
       </div>
     </div>
   </div>
   <script src="js/vendor/jquery.min.js"></script>
-  <script src="js/vendor/angular.min.js"></script>  
+  <script src="js/vendor/angular.min.js"></script>
+  <script src="js/vendor/spin.min.js"></script> 
   <script src="js/vendor/smoke.min.js"></script>  
   <script src="js/vendor/moment.min.js"></script> 
   <script src="js/vendor/iscroll-min.js"></script>   

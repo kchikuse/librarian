@@ -1,40 +1,71 @@
 <section class="ff-container animated bounceIn" id="detail-view">      
 	<div class="spacer"></div>
 	<div class="clr"></div>
-	<div class="ff-preview">
-		<img drop source="covers/" class="bookcover drop-shadow" />
+	<div class="ff-preview" ng-show="book.Id">
+		<img drop cover source="covers/" class="bookcover drop-shadow" />		
 		<div class="bookdata">
 		<form novalidate>
 		<table>
 			<tbody>
 				<tr>
+					<td>Title</td>
 					<td><input ng-model="book.Title" type="text"/></td>
 				</tr>
 				<tr>
+					<td>Subtitle</td>
+					<td><input ng-model="book.Subtitle" type="text"/></td>
+				</tr>				
+				<tr>
+					<td>ISBN</td>
 					<td><input ng-model="book.ISBN" type="text" digits/></td>
 				</tr>
 				<tr>
+					<td>Author</td>
 					<td><input ng-model="book.Author" type="text"/></td>
 				</tr>
 				<tr>
+					<td>Publisher</td>
 					<td><input ng-model="book.Publisher" type="text"/></td>
 				</tr>
 				<tr>
-					<td><input ng-model="book.PageCount" type="number" digits /></td>
-				</tr>					
+					<td>Genre</td>
+					<td><input ng-model="book.Genre" type="text"/></td>
+				</tr>
 				<tr>
+					<td>Published</td>
+					<td><input ng-model="book.DatePublished" type="text" /></td>
+				</tr>				
+				<tr>
+					<td>Description</td>
 					<td><textarea ng-model="book.Description"></textarea></td>
 				</tr>
 				<tr>
-					<td><textarea ng-model="book.Notes"></textarea></td>
-				</tr>		
-			    <tr>
+					<td>Notes</td>
+					<td><textarea ng-model="book.Notes" class="notes"></textarea></td>
+				</tr>						
+				<tr>
+			    	<td>Rating</td>
 			    	<td> 
 			    	<select ng-model="book.Rating" 
 			    			ng-selected="book.Rating" 
 			    			ng-options="n for n in [] | range:0:6" />
                     </td>
-			    </tr>	
+			    </tr>				
+				<tr>
+					<td>Pages</td>
+					<td><input ng-model="book.PageCount" type="number" digits /></td>
+				</tr>
+				<tr>
+		            <td>Finished?</td>
+		            <td><input ng-model="book.HasRead" type="checkbox" /></td>
+		        </tr>		        
+		        <tr>
+		        	<td></td>
+		        	<td class="toolbox">
+		        		<a submit class="button green">Update</a>
+		        		<a href="#/{{ book.Id }}" class="button darkblue">Cancel</a>
+		        	</td>
+		        </tr>		
 			</tbody>
 		</table>
 		</form>

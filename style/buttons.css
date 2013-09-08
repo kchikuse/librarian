@@ -1,0 +1,74 @@
+
+/*
+ * Simple Web Buttons
+ *
+ * The CSS3 version of the Simple Web Buttoms designed by Orman Clark http://www.premiumpixels.com/
+ * Author: Raspo http://tommasoraspo.com/
+ * 
+ * HTML Markup required:
+ * A simple anchor with a class of 'button' and a second class to indicate the color
+ * 
+ * i.e. <a href="#" class="button blue"></a>
+ *
+ * 10 colors available: white, grey, pink, orange, green, blue, purple, teal, darkblue, black
+ *
+ */
+
+
+
+.button{
+    display: inline-block;
+    text-decoration: none;
+    font: bold 12px/12px HelveticaNeue, Arial;
+    padding: 8px 11px;
+    color: #555;
+    border: 1px solid #dedede;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.button.green{
+    background: #b7d770;
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#cae285', endColorstr='#9fcb57'); /*  IE */
+    background: -webkit-gradient(linear, left top, left bottom, from(#cae285), to(#9fcb57)); /*  WebKit */
+    background: -moz-linear-gradient(top,  #cae285, #9fcb57);
+    border-color: #adc671 #98b65b #87aa4a;
+    color: #5d7731;
+    text-shadow: 0 1px 0 #cfe5a4;
+    -webkit-box-shadow: 0 1px 1px #d3d3d3, inset 0 1px 0 #d7e9a4;
+    -moz-box-shadow: 0 1px 1px #d3d3d3, inset 0 1px 0 #d7e9a4;
+    box-shadow: 0 1px 1px #d3d3d3, inset 0 1px 0 #d7e9a4;    
+}
+.button.green:hover{
+    background: #b9d972;
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#b8d872', endColorstr='#b9d972'); /*  IE */
+    background: -webkit-gradient(linear, left top, left bottom, from(#b8d872), to(#b9d972)); /*  WebKit */
+    background: -moz-linear-gradient(top,  #b8d872, #b9d972);
+    border-color: #8bb14d #83a648 #7d9e45;
+    text-shadow: 0 1px 0 #d5e8aa;
+    -webkit-box-shadow: 0 1px 1px #d5d5d5, inset 0 1px 0 #cae295;
+    -moz-box-shadow: 0 1px 1px #d5d5d5, inset 0 1px 0 #cae295;
+    box-shadow: 0 1px 1px #d5d5d5, inset 0 1px 0 #cae295;    
+}
+
+.button.darkblue{
+    background: #a5b8c6;
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#becbd6', endColorstr='#88a1b4'); /*  IE */
+    background: -webkit-gradient(linear, left top, left bottom, from(#becbd6), to(#88a1b4)); /*  WebKit */
+    background: -moz-linear-gradient(top,  #becbd6, #88a1b4);
+    border-color: #a2afb8 #8696a1 #6f818f;
+    color: #515f6a;
+    text-shadow: 0 1px 0 #c4d0d9;
+    -webkit-box-shadow: 0 1px 1px #d3d3d3, inset 0 1px 0 #ced8e0;
+    -moz-box-shadow: 0 1px 1px #d3d3d3, inset 0 1px 0 #ced8e0;
+    box-shadow: 0 1px 1px #d3d3d3, inset 0 1px 0 #ced8e0;    
+}
+.button.darkblue:hover{
+    background: #adbfcb;
+    border-color: #8996a0 #798791 #6c7a85;
+    text-shadow: 0 1px 0 #ced9e0;
+    -webkit-box-shadow: 0 1px 1px #d3d3d3, inset 0 1px 0 #c2cfd8;
+    -moz-box-shadow: 0 1px 1px #d3d3d3, inset 0 1px 0 #c2cfd8;
+    box-shadow: 0 1px 1px #d3d3d3, inset 0 1px 0 #c2cfd8;    
+}

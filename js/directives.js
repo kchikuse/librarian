@@ -1,7 +1,23 @@
-﻿/* stop angular from loading just the folder path and throwing a 404 */
-app.directive('bookcover', function () {
+﻿app.directive('digits', function () {    
     return {
-        restrict: 'C',
+        link: function (scope, element, attr) {            
+            element.bind('keydown', function (e) { 
+                var key = e.keyCode;
+                if (_.contains([ 8, 9, 13, 27, 46 ], key)) {
+                    return;
+                }
+                else {
+                    if (e.shiftKey || (key < 48 || key > 57) && (key < 96 || key > 105)) {
+                        e.preventDefault();
+                    }
+                }
+            }); 
+        } 
+    }
+});
+
+app.directive('cover', function () {
+    return {
         link: function (scope, element, attr) {            
             scope.$on('book-loaded', function() {                
                 element.attr('src', element.attr('source') + scope.book.Thumbnail);
@@ -20,36 +36,21 @@ app.directive('init', ['$timeout', function ($timeout) {
     };
 }]);
 
-app.directive('rate', ['$http', function ($http) {
+app.directive('rating', function () {
     return function (scope, element) {
         scope.$on('book-loaded', function() {
            element.raty({
                 size: 24,
                 number: 5,
-                half: false,
-                halfShow: false,
+                readOnly: true,
                 path: 'assets/raty',
-                score: scope.book.Rating,            
-                click: function (score) {                    
-                    $http({
-                        method: 'PUT',
-                        url: 'api/rate',
-                        data: { 
-                            score: score,
-                            id: scope.book.Id                       
-                        },      
-                    }).success(function (rating) {
-                        scope.book.Rating = rating;
-                    }).error(function(){
-                        notify('failed to rate book');
-                    });
-                }
+                score: scope.book.Rating
             });
         });
     };
-}]);
+});
 
-app.directive('nav', ['navService', function (navService) {
+app.directive('browse', ['nav', function (nav) {
     return {
         link: function (scope, element, attr) {            
             scope.$on('book-loaded', function() { 
@@ -58,30 +59,30 @@ app.directive('nav', ['navService', function (navService) {
                 element.focus().bind('keydown', function (e) {                                                       
                     switch (e.keyCode || e.which) {
                         case 37:
-                        navService.nav(id, 'L');
+                        nav.redirect(id, 'L');
                         break;
 
                         case 39:
-                        navService.nav(id, 'R');
+                        nav.redirect(id, 'R');
                         break;
 
                         case 27:
                         case 36:
-                        navService.nav(id);
+                        nav.redirect(id);
                         break;
                     }
                 }).bind('mousewheel', function(e) {
-                    navService.nav(id, e.originalEvent.wheelDelta / 120 > 0 ? 'L' : 'R');
+                    nav.redirect(id, e.originalEvent.wheelDelta / 120 > 0 ? 'L' : 'R');
                 });
 
                 var el = $(element).hammer();
 
                 el.on('swipeleft', function() {
-                    navService.nav(id, 'L');
+                    nav.redirect(id, 'L');
                 });
 
                 el.on('swiperight', function() {
-                    navService.nav(id, 'R')
+                    nav.redirect(id, 'R')
                 });
             });    
         },    
@@ -89,6 +90,7 @@ app.directive('nav', ['navService', function (navService) {
 }]);
 
 app.directive('drop', ['$window', function ($window) {
+
     return function (scope, element, attr) {
         element.on('drop', function (e) {
             e.originalEvent.stopPropagation();
@@ -128,27 +130,24 @@ app.directive('drop', ['$window', function ($window) {
 
         }).on('dragover', function (e) {
             e.preventDefault();
-        }).on('dragenter', function (e) {
+        }).on('dragenter', function () {
             element.addClass('over');
-        }).on('dragleave', function (e) {
+        }).on('dragleave', function () {
+            element.removeClass('over');
+        }).on('mouseleave', function() {
             element.removeClass('over');
         });
     };
 }]);
 
-app.directive('digits', function () {    
-    return {
-        link: function (scope, element, attr) {            
-            element.bind('keydown', function (e) { 
-                if (_.contains([ 8, 9, 13, 27, 46 ], e.keyCode)) {
-                    return;
+app.directive('submit', ['http', function (http) {
+    return function (scope, element) {
+       element.bind('click', function(){
+            http.put('api/update', scope.book, function(result){
+                if(result === 'false') {
+                    notify('failed to save the changes');
                 }
-                else {
-                    if (e.shiftKey || (e.keyCode < 48 || e.keyCode > 57) && (e.keyCode < 96 || e.keyCode > 105)) {
-                        e.preventDefault();
-                    }
-                }
-            }); 
-        } 
-    }
-});
+            });
+        });
+    };
+}]);

@@ -28,6 +28,8 @@ html,body {
     -webkit-user-select: text;
     user-select: text;
 }*/
+
+
 table {
 	border-collapse:collapse;
 	border-spacing:0;
@@ -107,6 +109,13 @@ a{
 	color: #82858e;
 	text-shadow: 0px 1px 1px rgba(255,255,255,0.8);
 }
+
+.container .load {
+  margin-left: auto;
+  margin-right: auto;
+  display: table;
+}
+
 #wrapper {
 	position:absolute; 
 	z-index:1;
@@ -129,9 +138,8 @@ a{
 	outline: none;
 }
 
-.edit {
-	cursor: hand;
-    cursor: pointer;
+.top input{
+	display: none;
 }
 
 a img {
@@ -143,15 +151,26 @@ a img {
     opacity: 0.5;
 }
 
-
-textarea{
-	width: 400px;
-	height: 150px;
+form td {
+	vertical-align: top;
 }
 
-input[type="text"]{
-	width: 280px;
-	height: 25px;
+
+input[type="text"], input[type="number"], select, textarea{
+	width: 333px;
+	border: 2px solid white; 
+    -webkit-box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    -moz-box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    padding: 4px;
+    background: rgba(255,255,255,0.5);
+    margin: 0;
 }
 
 input::-webkit-outer-spin-button,
@@ -168,5 +187,26 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 input[type="number"] {
     width: 80px;
-    height: 25px;
+}
+
+textarea{
+	width: 400px;
+	height: 100px;
+}
+
+textarea.notes {
+	height: 50px;
+}
+
+
+select {
+    width: 94px;
+    height: 31px;
+}
+
+.toolbox .button {
+	width: 77px;
+	text-align: center;
+	cursor: hand;
+    cursor: pointer;
 }

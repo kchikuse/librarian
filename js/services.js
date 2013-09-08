@@ -1,4 +1,4 @@
-﻿app.factory('navService', function () {
+﻿app.factory('nav', function () {
     var store = window.sessionStorage;   
 
     return {
@@ -7,9 +7,9 @@
                 store.setItem('books', _.pluck(books, 'Id'));
             }
         },
-        nav: function(id, direction) {
+        redirect: function(id, direction) {
             var list = store.getItem('books').split(','),        
-                idx = list.indexOf(id);
+                idx = list.indexOf(id.toString());
 
             if(!direction) {
                location.hash = '#/';
@@ -27,4 +27,27 @@
         }   
     };
     
+});
+
+
+app.factory('http', function () {
+    return {
+      put: function(url, data, callback) {
+        $.ajax({            
+            url: url,
+            data: data, 
+            type: 'PUT',             
+            success: callback
+        }); 
+      },
+
+       get: function(url, callback) {
+        $.ajax({           
+            url: url,  
+            type: 'GET',     
+            dataType: 'json',        
+            success: callback
+        });     
+       }
+    };
 });
