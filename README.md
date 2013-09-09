@@ -1,7 +1,7 @@
 Librarian
 =========
 
-A simple personal book manager using PHP, SQLite and Sammy.js
+A simple personal book manager using Slim PHP, SQLite and Angular.js
 
 
-God bless!
+God bless you!

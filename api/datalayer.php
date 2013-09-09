@@ -25,19 +25,18 @@ function UpdateBook($obj) {
 	$book = ORM::forTable('Books')->findOne($id);
 
 	$book->set(array(
-		'ISBN' 		  => $obj->put('ISBN'),
-		'Notes' 	  => $obj->put('Notes'),
-		'Title' 	  => $obj->put('Title'),	
-		'Genre' 	  => $obj->put('Genre'),
+		'ISBN' 		  => $obj->put('ISBN'),		
+		'Title' 	  => $obj->put('Title'),			
 		'Author' 	  => $obj->put('Author'),
-		'Rating' 	  => $obj->put('Rating'),
-		'LastUpdate'  => date('Y-m-d H:i:s'),				
-		'Subtitle' 	  => $obj->put('Subtitle'),
+		'Rating' 	  => $obj->put('Rating'),	
 		'Publisher'   => $obj->put('Publisher'),	
-		'PageCount'	  => $obj->put('PageCount'),
-		'Description' => $obj->put('Description'),
-		'HasRead' 	  => toBool($obj->put('HasRead'))
-	));
+		'PageCount'	  => $obj->put('PageCount'),	
+		'Genre' 	  => $obj->put('Genre') ?: '',	
+		'Notes' 	  => $obj->put('Notes') ?: '',
+		'Subtitle' 	  => $obj->put('Subtitle') ?: '',
+		'HasRead' 	  => toBool($obj->put('HasRead')),
+		'Description' => $obj->put('Description') ?: ''
+	))->set_expr('LastUpdate', "datetime('now','localtime')");
 	
 	return $book->save();	
 }

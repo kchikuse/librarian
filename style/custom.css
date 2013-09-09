@@ -155,6 +155,9 @@ form td {
 	vertical-align: top;
 }
 
+td.description {
+  white-space: pre-line;
+}
 
 input[type="text"], input[type="number"], select, textarea{
 	width: 333px;

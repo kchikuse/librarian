@@ -7,25 +7,13 @@
 });
 
 function notify(message) {
-	smoke.alert(message);
+    $('#notification').miniNotification({ 
+        time: 1800,
+        opacity: 0.98,
+        showSpeed: 500,
+        effect: 'fade'
+    }).html('<p>' + message + '</p>');
 }
-
-$.fn.serializeObject = function () {
-    var o = {};
-    var a = this.serializeArray();
-    $.each(a, function () {
-        if (o[this.name]) {
-            if (!o[this.name].push) {
-                o[this.name] = [o[this.name]];
-            }
-            o[this.name].push(this.value || '');
-        } else {
-            o[this.name] = this.value || '';
-        }
-    });
-    return o;
-};
-
 
 $(function () {
 

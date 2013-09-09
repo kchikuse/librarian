@@ -144,9 +144,7 @@ app.directive('submit', ['http', function (http) {
     return function (scope, element) {
        element.bind('click', function(){
             http.put('api/update', scope.book, function(result){
-                if(result === 'false') {
-                    notify('failed to save the changes');
-                }
+                notify( result === false ? 'failed to save the changes' : 'book saved successfully');                
             });
         });
     };
