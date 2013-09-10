@@ -149,3 +149,12 @@ app.directive('submit', ['http', function (http) {
         });
     };
 }]);
+
+app.directive('row',function(){
+  return {
+    replace:true,
+    restrict: 'E',
+    transclude: true,
+    template:'<div class="row"><div ng-transclude></div></div>'
+  }
+});

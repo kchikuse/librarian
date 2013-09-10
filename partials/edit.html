@@ -5,69 +5,67 @@
 		<img drop cover source="covers/" class="bookcover drop-shadow" />		
 		<div class="bookdata">
 		<form novalidate>
-		<table>
-			<tbody>
-				<tr>
-					<td>Title</td>
-					<td><input ng-model="book.Title" type="text"/></td>
-				</tr>
-				<tr>
-					<td>Subtitle</td>
-					<td><input ng-model="book.Subtitle" type="text"/></td>
-				</tr>				
-				<tr>
-					<td>ISBN</td>
-					<td><input ng-model="book.ISBN" type="text" digits/></td>
-				</tr>
-				<tr>
-					<td>Author</td>
-					<td><input ng-model="book.Author" type="text"/></td>
-				</tr>
-				<tr>
-					<td>Publisher</td>
-					<td><input ng-model="book.Publisher" type="text"/></td>
-				</tr>
-				<tr>
-					<td>Genre</td>
-					<td><input ng-model="book.Genre" type="text"/></td>
-				</tr>
-				<tr>
-					<td>Published</td>
-					<td><input ng-model="book.DatePublished" type="text" /></td>
-				</tr>				
-				<tr>
-					<td>Description</td>
-					<td><textarea ng-model="book.Description"></textarea></td>
-				</tr>
-				<tr>
-					<td>Notes</td>
-					<td><textarea ng-model="book.Notes" class="notes"></textarea></td>
-				</tr>						
-				<tr>
-			    	<td>Rating</td>
-			    	<td> 
+			<div class="table">
+				<row>
+					<div>Title</div>
+					<div><input ng-model="book.Title" type="text"/></div>
+				</row>
+				<row>
+					<div>Subtitle</div>
+					<div><input ng-model="book.Subtitle" type="text"/></div>
+				</row>				
+				<row>
+					<div>ISBN</div>
+					<div><input ng-model="book.ISBN" type="text" digits/></div>
+				</row>
+				<row>
+					<div>Author</div>
+					<div><input ng-model="book.Author" type="text"/></div>
+				</row>
+				<row>
+					<div>Publisher</div>
+					<div><input ng-model="book.Publisher" type="text"/></div>
+				</row>
+				<row>
+					<div>Genre</div>
+					<div><input ng-model="book.Genre" type="text"/></div>
+				</row>
+				<row>
+					<div>Published</div>
+					<div><input ng-model="book.DatePublished" type="text" /></div>
+				</row>				
+				<row>
+					<div>Description</div>
+					<div><textarea ng-model="book.Description"></textarea></div>
+				</row>
+				<row>
+					<div>Notes</div>
+					<div><textarea ng-model="book.Notes" class="notes"></textarea></div>
+				</row>						
+				<row>
+			    	<div>Rating</div>
+			    	<div> 
 			    	<select ng-model="book.Rating" 
 			    			ng-selected="book.Rating" 
 			    			ng-options="n for n in [] | range:0:6" />
-                    </td>
-			    </tr>				
-				<tr>
-					<td>Pages</td>
-					<td><input ng-model="book.PageCount" type="number" digits /></td>
-				</tr>
-				<tr>
-		            <td>Finished?</td>
-		            <td><input ng-model="book.HasRead" type="checkbox" /></td>
-		        </tr>		        
-		        <tr>
-		        	<td></td>
-		        	<td class="toolbox">
+	                </div>
+			    </row>				
+				<row>
+					<div>Pages</div>
+					<div><input ng-model="book.PageCount" type="number" digits /></div>
+				</row>
+				<row>
+		            <div>Finished?</div>
+		            <div><input ng-model="book.HasRead" type="checkbox" /></div>
+		        </row>		        
+		        <row>
+		        	<div></div>
+		        	<div class="col toolbox">
 		        		<a submit class="button green">Update</a>
 		        		<a href="#/{{ book.Id }}" class="button darkblue">Close</a>
-		        	</td>
-		        </tr>		
-			</tbody>
-		</table>
+		        	</div>
+		        </row>	
+			</div>
 		</form>
 		</div>
 	</div>

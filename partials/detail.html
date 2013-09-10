@@ -4,39 +4,35 @@
 	<div class="ff-preview" ng-cloak>	
 		<img cover source="covers/" class="bookcover drop-shadow" />
 		<div class="bookdata">
-		<table>
-			<tbody>
-				<tr>
-					<td>
-						<h2>{{ book.Title }} 
-							<span ng-show="book.Subtitle">{{ book.Subtitle }}</span>
-						</h2>
-					</td>
-				</tr>
-				<tr><td>{{ book.Author }}</td></tr>
-				<tr>
-					<td>
-						{{ book.ISBN }} <a href="#/edit/{{ book.Id }}">
-						<img ng-src="assets/edit.png" /></a>
-					</td>
-				</tr>								
-				<tr>
-					<td>
-						{{ book.PageCount }} pages <img ng-src="assets/read.png" ng-show="book.HasRead" />					
-					</td>
-				</tr>		
-				<tr><td>{{ book.Publisher }}</td></tr>			
-				<tr>
-					<td class="description" ng-bind-html-unsafe="book.Description"></td>
-				</tr>
-				<tr>
-					<td>
-						<em ng-bind-html-unsafe="book.Notes"></em>
-					</td>
-				</tr>		
-			    <tr><td><div rating></div></td></tr>	
-			</tbody>
-		</table>
+			<div class="table">
+				<row>					
+					<h2>{{ book.Title }} 
+						<span ng-show="book.Subtitle">{{ book.Subtitle }}</span>
+					</h2>
+				</row>
+				<row>
+					{{ book.Author }}
+				</row>
+				<row>
+					{{ book.ISBN }} 
+					<a href="#/edit/{{ book.Id }}"> 
+						<img ng-src="assets/edit.png" />
+					</a>
+				</row>								
+				<row>
+					{{ book.PageCount }} pages <img ng-src="assets/read.png" ng-show="book.HasRead" />					
+				</row>		
+				<row>
+					{{ book.Publisher }}
+				</row>			
+				<row>
+					<div class="description" ng-bind-html-unsafe="book.Description"></div>
+				</row>
+				<row>
+					<em ng-bind-html-unsafe="book.Notes"></em>
+				</row>	
+				<div rating></div>	
+			</div>
 		</div>
 	</div>
 </section>

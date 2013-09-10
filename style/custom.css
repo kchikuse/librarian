@@ -151,13 +151,6 @@ a img {
     opacity: 0.5;
 }
 
-form td {
-	vertical-align: top;
-}
-
-td.description {
-  white-space: pre-line;
-}
 
 input[type="text"], input[type="number"], select, textarea{
 	width: 333px;
@@ -212,4 +205,27 @@ select {
 	text-align: center;
 	cursor: hand;
     cursor: pointer;
+}
+
+/* layout */
+.table{
+    display: table;
+    width: 600px;
+    border-collapse: collapse;
+}
+ .row {  
+    margin-top: 10px;
+ }
+ .row div{ 
+    display: table-cell;
+    vertical-align: middle;
+ }
+ .row div:first-child {
+ 	min-width: 100px;
+ 	max-width: 450px;
+ 	vertical-align: top;
+ }
+
+ .row .description {
+  white-space: pre-line;
 }
