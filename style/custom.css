@@ -16,20 +16,9 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,
 html,body {
 	margin:0;
 	padding:0;
-	-o-user-select: none;
-    -moz-user-select: none;
+	overflow:hidden;
     -webkit-user-select: none;
-    user-select: none; 
 }
-/*
-.bookdata td {
-    -o-user-select: text;
-    -moz-user-select: text;
-    -webkit-user-select: text;
-    user-select: text;
-}*/
-
-
 table {
 	border-collapse:collapse;
 	border-spacing:0;
@@ -59,7 +48,7 @@ abbr,acronym { border:0;
 section, header{
 	display: block;
 }
-/* General Demo Style */
+/* General Style */
 body{
 	font-family: Cambria, Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
 	background: #e0e3ec url(../assets/bgnoise_lg.jpg) repeat top left;
@@ -81,12 +70,11 @@ a{
 	clear: both;
 }
 .container > header{
-	padding: 20px 30px 10px 30px;
-	margin: 0px 20px 10px 20px;
 	position: relative;
 	display: block;
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
-    text-align: center;
+	text-align: left;
+	padding: 12px 0px 0px 230px;
 }
 .container > header h1{
 	font-family: 'BebasNeueRegular', 'Arial Narrow', Arial, sans-serif;
@@ -104,18 +92,17 @@ a{
 }
 .container > header h2, 
 .bookdata h2{
-	font-size: 16px;
+	font-size: 16.4px;
 	font-style: italic;
 	color: #82858e;
 	text-shadow: 0px 1px 1px rgba(255,255,255,0.8);
 }
 
-.container .load {
+.container #loader {
   margin-left: auto;
   margin-right: auto;
   display: table;
 }
-
 #wrapper {
 	position:absolute; 
 	z-index:1;
@@ -133,17 +120,18 @@ a{
 	width:100%;
 	padding:0;
 }
-
 #detail-view {
 	outline: none;
 }
 
-.top input{
-	display: none;
-}
-
 a img {
 	border: none;
+}
+
+.bookcover {
+    -webkit-user-drag: none;
+    min-width: 232px;
+    min-height: 355px;
 }
 
 .bookcover.over {
@@ -151,50 +139,36 @@ a img {
     opacity: 0.5;
 }
 
-
-input[type="text"], input[type="number"], select, textarea{
+input[type="text"], 
+input[type="number"], 
+select, textarea {
 	width: 333px;
 	border: 2px solid white; 
-    -webkit-box-shadow: 
-      inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1); 
-    -moz-box-shadow: 
-      inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1); 
-    box-shadow: 
-      inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1); 
+    -webkit-box-shadow: inset 0 0 8px rgba(0,0,0,0.1), 0 0 16px rgba(0,0,0,0.1); 
     padding: 4px;
     background: rgba(255,255,255,0.5);
     margin: 0;
 }
-
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-
 input[type="date"]::-webkit-inner-spin-button,
 input[type="date"]::-webkit-calendar-picker-indicator {
     display: none;
     -webkit-appearance: none;
 }
-
 input[type="number"] {
     width: 80px;
 }
-
-textarea{
-	width: 400px;
-	height: 100px;
+textarea {
+	width: 500px;
+	height: 128px;
 }
-
-textarea.notes {
-	height: 50px;
-}
-
-
+	textarea.notes {
+		height: 50px;
+	}
 select {
     width: 94px;
     height: 31px;
@@ -207,25 +181,83 @@ select {
     cursor: pointer;
 }
 
-/* layout */
+.leftmenu {
+	position: fixed;
+	left: 15px;
+	top: 80px;
+}
+	.leftmenu #filter{
+		width: 180px;	
+		display: block;
+		margin-bottom: 15px;
+	}
+	.leftmenu .button{
+		width: 100px;	
+	}	
+
+/* table layout */
 .table{
     display: table;
     width: 600px;
     border-collapse: collapse;
 }
- .row {  
-    margin-top: 10px;
- }
- .row div{ 
-    display: table-cell;
-    vertical-align: middle;
- }
- .row div:first-child {
- 	min-width: 100px;
- 	max-width: 450px;
- 	vertical-align: top;
- }
+	.info {
+	    display: block;
+	    min-height: 400px;
+	}
+	.row {  
+	    margin-top: 10px;
+	 }
+	 .row div { 
+	    display: table-cell;
+	    vertical-align: middle;
+	}
+	.row div:first-child {
+	 	min-width: 100px;
+	 	max-width: 470px;
+	 	vertical-align: top;
+	}
+	.row .description {
+	  	white-space: pre-line;
+	}
+	.row .notes { 
+		color: #0B470B;
+		font-size: 16px;
+	}
+	.row .subtitle:before {
+   		content: ": ";
+	}
+	.margin {
+		margin-top: 10px;
+	}
 
- .row .description {
-  white-space: pre-line;
+.back {
+	height: 48px;
+	width: 48px;
+	cursor: pointer;
+	display: block;
+	background: url('../assets/back.png') center no-repeat;
+}
+
+#notification input {
+	font-size: 15px;
+	width: 300px;
+}
+
+#loader {
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	opacity: 0.5;
+	z-index:1 !important;
+	background-color: black;
+	display: none;
+}
+
+.spinner {
+	position:fixed !important;
+	top:50%;
+	left:50%;
 }

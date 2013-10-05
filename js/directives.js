@@ -1,6 +1,6 @@
 ﻿app.directive('digits', function () {    
     return {
-        link: function (scope, element, attr) {            
+        link: function (scope, element) {            
             element.bind('keydown', function (e) { 
                 var key = e.keyCode;
                 if (_.contains([ 8, 9, 13, 27, 46 ], key)) {
@@ -19,8 +19,8 @@
 app.directive('cover', function () {
     return {
         link: function (scope, element, attr) {            
-            scope.$on('book-loaded', function() {                
-                element.attr('src', element.attr('source') + scope.book.Thumbnail);
+            scope.$on('book-load', function(e, book) {            
+                element.attr('src', 'covers/' + book.Thumbnail);
             });    
         } 
     };
@@ -29,22 +29,32 @@ app.directive('cover', function () {
 app.directive('init', ['$timeout', function ($timeout) {
     return {
         link: function (scope) {
-            scope.$on('books-loaded', function () {
+            scope.$on('books-load', function () {
                 $timeout(initApp, 0, false);
+            });
+
+            scope.$on('$routeChangeSuccess', function(next, current) { 
+               var scr = app.scroller;
+               if(!scr) return;
+
+               if(current.params.id) { 
+                    scr.disable();    
+                    scr.refresh();  
+               } else scr.enable(); 
             });
         }
     };
 }]);
 
+
 app.directive('rating', function () {
     return function (scope, element) {
-        scope.$on('book-loaded', function() {
+        scope.$on('book-load', function(e, book) {
            element.raty({
-                size: 24,
                 number: 5,
                 readOnly: true,
-                path: 'assets/raty',
-                score: scope.book.Rating
+                score: book.Rating,
+                path: 'assets/raty'                
             });
         });
     };
@@ -52,89 +62,81 @@ app.directive('rating', function () {
 
 app.directive('browse', ['nav', function (nav) {
     return {
-        link: function (scope, element, attr) {            
-            scope.$on('book-loaded', function() { 
-                var id = scope.book.Id; 
-
+        link: function (scope, element) {            
+            scope.$on('book-load', function(e, book) { 
                 element.focus().bind('keydown', function (e) {                                                       
                     switch (e.keyCode || e.which) {
                         case 37:
-                        nav.redirect(id, 'L');
+                        nav.redirect(book.Id, 'L');
                         break;
 
                         case 39:
-                        nav.redirect(id, 'R');
+                        nav.redirect(book.Id, 'R');
                         break;
 
                         case 27:
                         case 36:
-                        nav.redirect(id);
+                        nav.redirect(book.Id);
                         break;
                     }
-                }).bind('mousewheel', function(e) {
-                    nav.redirect(id, e.originalEvent.wheelDelta / 120 > 0 ? 'L' : 'R');
                 });
 
                 var el = $(element).hammer();
 
                 el.on('swipeleft', function() {
-                    nav.redirect(id, 'L');
+                    nav.redirect(book.Id, 'L');
                 });
 
                 el.on('swiperight', function() {
-                    nav.redirect(id, 'R')
+                    nav.redirect(book.Id, 'R')
                 });
             });    
         },    
     };
 }]);
 
-app.directive('drop', ['$window', function ($window) {
+app.directive('drop', ['http', function (http) {
 
-    return function (scope, element, attr) {
+    return function (scope, element) {
         element.on('drop', function (e) {
+            
             e.originalEvent.stopPropagation();
             e.originalEvent.preventDefault();
 
             var files = e.originalEvent.dataTransfer.files;
 
-            if (!files.length) {
-                return;
+            if (!files.length) return;
+
+            if (FormData === undefined) 
+                return error("only works with chrome");
+
+            var data = new FormData();
+
+            data.append('file', files[0]);
+
+            if (!files[0].name.validCover()) {
+                return error('only an image can be used as a book cover');
             }
 
-            if ($window.FormData !== undefined) {
-                var data = new $window.FormData();
-                
-                data.append('file', files[0]);
-
-                $.ajax({
-                    type: 'PUT',
-                    data: data,
-                    contentType: false,
-                    processData: false,
-                    url: 'api/cover',
-                    success: function (file) {
-                        scope.book.thumbnail = file;                        
-                        scope.$apply();
-                    },
-                    error: function () {
-                        notify('failed to save cover');
-                    }
-                }).always(function() {
-                    element.removeClass('over');
-                });
-
-            } else {
-                console.log("this browser is too old");
-            }
+            http.post('api/cover', data, function(file){
+                if(file === 'false') {
+                    error('failed to save book cover');
+                }
+                else {
+                    file = file.replace(/"/g, "");
+                    scope.book.Thumbnail = file;   
+                    element.attr('src', element.attr('source') + file);
+                    scope.$apply();
+                }
+            }).always(function() {
+                element.removeClass('over');
+            });
 
         }).on('dragover', function (e) {
             e.preventDefault();
         }).on('dragenter', function () {
             element.addClass('over');
-        }).on('dragleave', function () {
-            element.removeClass('over');
-        }).on('mouseleave', function() {
+        }).on('dragleave mouseleave', function() {
             element.removeClass('over');
         });
     };
@@ -142,19 +144,36 @@ app.directive('drop', ['$window', function ($window) {
 
 app.directive('submit', ['http', function (http) {
     return function (scope, element) {
-       element.bind('click', function(){
-            http.put('api/update', scope.book, function(result){
-                notify( result === false ? 'failed to save the changes' : 'book saved successfully');                
+       scope.$on('book-load', function(e, book) {            
+            element.text(book.Id === 0 ? 'Save' : 'Update')
+            .bind('click', function() {
+                http.put('api/update', scope.book, function(result){
+                    if(result === 'false') {
+                        error('failed to save the changes');
+                    }
+                    else notify('book saved successfully');                
+                });
             });
-        });
+        });       
     };
 }]);
 
-app.directive('row',function(){
-  return {
-    replace:true,
-    restrict: 'E',
-    transclude: true,
-    template:'<div class="row"><div ng-transclude></div></div>'
-  }
-});
+app.directive('google', ['http', function (http) {
+    return function (scope, element) {        
+        element.bind('click', function() {
+            var isbn = scope.book.ISBN;
+            if(!isbn.length) {
+                $('.isbn').focus();
+                return error('enter an ISBN to search for');
+            }
+
+            load();
+            http.get('api/google/' + isbn, function(book){
+                angular.copy(book, scope.book);
+                $('.bookcover').attr('src', book.Thumbnail);
+                scope.$apply(); 
+                load(false);              
+            });
+        });     
+    };
+}]);

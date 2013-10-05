@@ -1,24 +1,16 @@
-<section class="ff-container top">      
-	<input id="select-type-all" name="set-1" type="radio" class="ff-selector-type-all" checked="checked" />
-	<label for="select-type-all" class="ff-label-type-all">All</label>
+<section class="ff-container top"> 
+	<div class="leftmenu">
+		<input ng-model="query" placeholder="Search {{ books.length }} books" type="text" id="filter" />  
 
-	<input id="select-type-1" name="set-1" type="radio" class="ff-selector-type-1" />
-	<label for="select-type-1" class="ff-label-type-1">Bibles</label>
+		<a href="#/edit/0" class="button green">Add a book</a>   
+	</div>
 
-	<input id="select-type-2" name="set-1" type="radio" class="ff-selector-type-2" />
-	<label for="select-type-2" class="ff-label-type-2">Commentaries</label>
-
-	<input id="select-type-3" name="set-1" type="radio" class="ff-selector-type-3" />
-	<label for="select-type-3" class="ff-label-type-3">Secular</label>
-
-	<div class="clr"></div>
-
-	<ul class="ff-items animated bounceIn" ng-cloak>
-			<li class="ff-item-type-2" ng-repeat="book in books">
-				<a href="#/{{ book.Id }}">
-					<span>{{ book.Title }}</span>
-					<img ng-src="covers/{{ book.Thumbnail }}" />
-				</a>
-			</li>
+	<ul class="ff-items bounceIn" ng-cloak>
+		<li class="ff-item-type-2" ng-repeat="book in books | filter:query">
+			<a href="#/{{ book.Id }}">
+				<span>{{ book.Title }}</span>
+				<img ng-src="covers/{{ book.Thumbnail }}" />
+			</a>
+		</li>
 	</ul>
 </section>

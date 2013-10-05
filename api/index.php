@@ -6,22 +6,25 @@ require_once("Slim/Slim.php");
 $app = new Slim();
 
 $app->get("/", function () {
-	echo json_encode( GetLibrary(), JSON_NUMERIC_CHECK );
+	send_json( GetLibrary() );
 });
 
+
 $app->get("/:id", function ($id) {
-	echo json_encode( GetBook($id), JSON_NUMERIC_CHECK );
+	send_json( GetBook($id) );
 })->conditions(array('id' => '\d+'));
 
-$app->put("/cover", function () use ($app) {
-    $req = $app->getInstance()->request();
-    $putdata = $req->getBody();
-    echo json_encode( SaveCover($data) );
+$app->get("/google/:isbn", function ($isbn) {
+    send_json( FetchGoogle($isbn) ); 
 });
 
 $app->put("/update", function () use ($app) {
-    echo json_encode( UpdateBook($app->request()) ); 
+    send_json( UpdateBook($app->request()) ); 
 });
 
+
+$app->post("/cover", function () {
+    send_json( Savecover() );
+});
 
 $app->run();

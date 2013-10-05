@@ -1,37 +1,59 @@
-<section browse class="ff-container animated bounceIn" id="detail-view" tabindex="0">      
-	<div class="spacer"></div>
-	<div class="clr"></div>	
-	<div class="ff-preview" ng-cloak>	
-		<img cover source="covers/" class="bookcover drop-shadow" />
+<style>
+	header { display: none!important; }
+</style>
+<a class="back" href="#/"></a>
+<section browse class="ff-container bounceIn" id="detail-view" tabindex="0" ng-cloak>      
+	<div class="ff-preview">	
+		<img cover class="bookcover drop-shadow" />
 		<div class="bookdata">
 			<div class="table">
-				<row>					
-					<h2>{{ book.Title }} 
-						<span ng-show="book.Subtitle">{{ book.Subtitle }}</span>
+				
+				<div class="info">
+				<div class="row">					
+					<h2>{{ book.Title }}
+						<span ng-show="book.Subtitle" class="subtitle">{{ book.Subtitle }}</span>
 					</h2>
-				</row>
-				<row>
+				</div>
+				
+				<div class="row">
 					{{ book.Author }}
-				</row>
-				<row>
+				</div>
+				
+				<div class="row">
 					{{ book.ISBN }} 
-					<a href="#/edit/{{ book.Id }}"> 
-						<img ng-src="assets/edit.png" />
-					</a>
-				</row>								
-				<row>
+				</div>								
+				
+				<div class="row">
 					{{ book.PageCount }} pages <img ng-src="assets/read.png" ng-show="book.HasRead" />					
-				</row>		
-				<row>
-					{{ book.Publisher }}
-				</row>			
-				<row>
+				</div>	
+
+				<div class="row" ng-show="book.Genre">
+					{{ book.Genre }}
+				</div>
+
+				<div class="row">
+					{{ book.Publisher }} 
+				</div>	
+
+				<br />
+				
+				<div rating></div>
+
+				<div class="row">
 					<div class="description" ng-bind-html-unsafe="book.Description"></div>
-				</row>
-				<row>
-					<em ng-bind-html-unsafe="book.Notes"></em>
-				</row>	
-				<div rating></div>	
+				</div>
+				
+				<div class="row margin" ng-show="book.Notes">
+					<div class="notes" ng-bind-html-unsafe="book.Notes"></div>
+				</div>
+				<br />	
+				</div>
+
+				<div class="row">
+		        	<div class="edit col toolbox">
+		        		<a href="#/edit/{{book.Id}}" class="button green">Edit</a>
+		        	</div>
+		        </div>
 			</div>
 		</div>
 	</div>

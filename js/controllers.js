@@ -1,20 +1,18 @@
-﻿app.controller('BookListCtrl', ['$scope', 'nav', 'http', function($scope, nav, http) {
-
-    http.get('api', function(books){
-    	$scope.books = books;         
-        $scope.$apply();
+﻿app.controller('ListCtrl', ['$scope', 'nav', 'http', function($scope, nav, http) {
+    load();
+    http.get('api', function(books){    	
+        load(false);
         nav.saveBooks(books);
-        $scope.$emit('books-loaded');
+        $scope.books = books;  
+        $scope.$apply();        
+        $scope.$emit('books-load');        
     });
-
 }]);
 
-app.controller('BookEditCtrl', ['$scope', '$routeParams', 'http', function($scope, $routeParams, http) {
-    
+app.controller('EditCtrl', ['$scope', '$routeParams', 'http', function($scope, $routeParams, http) {    
     http.get('api/' + $routeParams.id, function(book){
-    	$scope.book = book;
-    	$scope.$apply();
-        $scope.$emit('book-loaded');
+    	$scope.book = book; 
+        $scope.$apply();    	
+        $scope.$emit('book-load', book);       
     });
-
 }]);

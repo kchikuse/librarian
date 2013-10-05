@@ -1,70 +1,74 @@
-<section class="ff-container animated bounceIn" id="detail-view">      
-	<div class="spacer"></div>
-	<div class="clr"></div>
-	<div class="ff-preview" ng-cloak>
-		<img drop cover source="covers/" class="bookcover drop-shadow" />		
+<style>
+	header { display: none!important; }
+</style>
+<a class="back" href="#/"></a>
+<section class="ff-container bounceIn" id="detail-view" ng-cloak>      
+	<div class="ff-preview">
+		<img drop cover class="bookcover drop-shadow" />		
 		<div class="bookdata">
 		<form novalidate>
 			<div class="table">
-				<row>
+				<div class="row">
 					<div>Title</div>
 					<div><input ng-model="book.Title" type="text"/></div>
-				</row>
-				<row>
+				</div>
+				<div class="row">
 					<div>Subtitle</div>
 					<div><input ng-model="book.Subtitle" type="text"/></div>
-				</row>				
-				<row>
+				</div>				
+				<div class="row">
 					<div>ISBN</div>
-					<div><input ng-model="book.ISBN" type="text" digits/></div>
-				</row>
-				<row>
+					<div><input ng-model="book.ISBN" type="text" class="isbn" digits/></div>
+				</div>
+				<div class="row">
 					<div>Author</div>
 					<div><input ng-model="book.Author" type="text"/></div>
-				</row>
-				<row>
+				</div>
+				<div class="row">
 					<div>Publisher</div>
 					<div><input ng-model="book.Publisher" type="text"/></div>
-				</row>
-				<row>
+				</div>
+				<div class="row">
 					<div>Genre</div>
 					<div><input ng-model="book.Genre" type="text"/></div>
-				</row>
-				<row>
+				</div>
+				<div class="row">
 					<div>Published</div>
 					<div><input ng-model="book.DatePublished" type="text" /></div>
-				</row>				
-				<row>
+				</div>				
+				<div class="row">
 					<div>Description</div>
 					<div><textarea ng-model="book.Description"></textarea></div>
-				</row>
-				<row>
+				</div>
+				<div class="row">
 					<div>Notes</div>
 					<div><textarea ng-model="book.Notes" class="notes"></textarea></div>
-				</row>						
-				<row>
+				</div>						
+				<div class="row">
 			    	<div>Rating</div>
 			    	<div> 
 			    	<select ng-model="book.Rating" 
 			    			ng-selected="book.Rating" 
 			    			ng-options="n for n in [] | range:0:6" />
 	                </div>
-			    </row>				
-				<row>
+			    </div>				
+				<div class="row">
 					<div>Pages</div>
 					<div><input ng-model="book.PageCount" type="number" digits /></div>
-				</row>
-				<row>
+				</div>
+				<div class="row">
 		            <div>Finished?</div>
 		            <div><input ng-model="book.HasRead" type="checkbox" /></div>
-		        </row>		        
-		        <row>
+		        </div>		        
+		        <div class="row">
 		        	<div></div>
-		        	<div class="col toolbox">
-		        		<a submit class="button green">Update</a>
-		        		<a href="#/{{ book.Id }}" class="button darkblue">Close</a>
+		        	<div class="col toolbox" ng-switch="book.Id === 0">
+		        		<a submit class="button green"></a>
+		        		<a ng-switch-when="true" google class="button darkblue">Google</a>
+		        		<a ng-switch-when="true" ng-href="#/" class="button darkblue">Close</a>
+		        		<a ng-switch-when="false" ng-href="#/{{ book.Id }}" class="button darkblue">Close</a>
 		        	</div>
-		        </row>	
+		        </div>	
 			</div>
 		</form>
 		</div>

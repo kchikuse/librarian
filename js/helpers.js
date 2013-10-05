@@ -1,38 +1,58 @@
-﻿var scroll,
-    spin = false, 
-	initApp = _.once(function() {    
-    scroll = new iScroll('wrapper', { 
-        checkDOMChanges: true 
-    });
+﻿var spinner = new Spinner({ 
+    length: 15, 
+    width: 8,
+    radius: 23, 
+    trail: 27, 
+    color: '#9EF690',
+    className: 'spinner' 
+  }),
+
+  initApp = _.once(function() {    
+    app.scroller = new iScroll('wrapper', {
+      useTransform: false,
+      checkDOMChanges: true,
+      onBeforeScrollStart: function (e) {
+          var target = e.target;
+          while (target.nodeType != 1) target = target.parentNode;
+          if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA') {
+            e.preventDefault();
+        }
+      }
+  });
 });
 
-function notify(message) {
-    $('#notification').miniNotification({ 
-        time: 1800,
-        opacity: 0.98,
-        showSpeed: 500,
-        effect: 'fade'
-    }).html('<p>' + message + '</p>');
+function error(message) {
+    notify(message, 'error');
 }
+
+function notify(message, type) {
+  $('#notification').miniNotification({ 
+      time: 1800,
+      opacity: 0.98,
+      showSpeed: 500
+  }).html('<p class="'+ (type || 'success') +'">' + message + '</p>');
+}
+
+function load(state) {  
+  if(state === false) {
+    spinner.stop();
+    $('#loader').hide();
+  }
+  else $('#loader').after(spinner.spin().el).show();
+}
+
+String.prototype.validCover = function () {
+  return this.toLowerCase().match(/\.(jpg|jpeg|png|gif|bmp)$/);
+};
 
 $(function () {
 
-    var spinner = new Spinner({
-        length: 21,
-        width: 7,
-        radius: 21,
-        color: '#236496'
-    });
-   
   $(document)
-   .ajaxStart(function () {
-        if(spin) $('.load').html(spinner.spin().el);
-    })
-   .ajaxStop(function () {
-        if(spin) spinner.stop(); 
-    })
+   .ajaxStart(function () {})
+   .ajaxStop(function () {})
    .ajaxError(function(event, request, settings) {
-      notify('Request failed [ ' + settings.url + ' ]');
+      load(false);
+      error('Request failed [ ' + settings.url + ' ]');
    });
 
 });

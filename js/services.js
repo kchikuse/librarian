@@ -11,12 +11,12 @@
             var list = store.getItem('books').split(','),        
                 idx = list.indexOf(id.toString());
 
-            if(!direction) {
+            if(!direction) {               
                location.hash = '#/';
             }
 
             if(direction === 'L') {            
-                var previd = idx > 0 ? list[idx - 1] : _.last(list);                                        
+                var previd = idx > 0 ? list[idx - 1] : _.last(list);                                   
                 location.hash = '#/' + previd;
             }
 
@@ -32,8 +32,9 @@
 
 app.factory('http', function () {
     return {
+
       put: function(url, data, callback) {
-        $.ajax({            
+        return $.ajax({            
             url: url,
             data: data, 
             type: 'PUT',             
@@ -42,12 +43,24 @@ app.factory('http', function () {
       },
 
        get: function(url, callback) {
-        $.ajax({           
+        return $.ajax({           
             url: url,  
             type: 'GET',     
             dataType: 'json',        
             success: callback
         });     
-       }
+       },
+
+      post: function(url, data, callback) {
+       return $.ajax({            
+            url: url,
+            data: data, 
+            type: 'POST',             
+            success: callback,
+            contentType: false,
+            processData: false
+        });  
+      },
+
     };
 });
