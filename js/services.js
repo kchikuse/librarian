@@ -12,7 +12,7 @@
                 idx = list.indexOf(id.toString());
 
             if(!direction) {               
-               location.hash = '#/';
+               location.hash = '#/' + id;
             }
 
             if(direction === 'L') {            

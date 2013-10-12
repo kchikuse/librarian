@@ -1,4 +1,9 @@
 ﻿var app = angular.module('bookmodule', []);
+
+app.constant('config', {
+	ver: '1.0.0', 
+	covers: 'covers/'
+});
 	
 app.config(['$routeProvider', function ($routeProvider) {
 		

@@ -47,9 +47,15 @@ function BlankBook() {
 }
 
 function UpdateBook($o) {
-	$id = $o->put('Id');
+	$id = intval($o->put('Id'));
 
-	$book = ORM::forTable('Books')->findOne($id);
+	if($id === 0) {
+	   $book = ORM::forTable('Books')->create();
+	   $book->set_expr('DateAdded', "datetime('now','localtime')");
+	}
+	else {
+		$book = ORM::forTable('Books')->findOne($id);
+	}
 
 	$book->set(array(
 		'ISBN' 		  => put($o, 'ISBN'),	
@@ -65,8 +71,8 @@ function UpdateBook($o) {
 		'HasRead' 	  => parse_bool(put($o, 'HasRead')),	
 		'Thumbnail'   => put($o, 'Thumbnail') ?: 'blank.jpg',	
 	))->set_expr('LastUpdate', "datetime('now','localtime')");
-	
-	return $book->save();	
+
+	return $book->save() ? $book->id() : false;
 }
 
 function SaveCover() {

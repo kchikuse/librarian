@@ -3,9 +3,7 @@
         link: function (scope, element) {            
             element.bind('keydown', function (e) { 
                 var key = e.keyCode;
-                if (_.contains([ 8, 9, 13, 27, 46 ], key)) {
-                    return;
-                }
+                if (_.contains([ 8, 9, 13, 27, 46 ], key)) return;                
                 else {
                     if (e.shiftKey || (key < 48 || key > 57) && (key < 96 || key > 105)) {
                         e.preventDefault();
@@ -16,15 +14,15 @@
     }
 });
 
-app.directive('cover', function () {
+app.directive('cover', ['config', function (config) {
     return {
         link: function (scope, element, attr) {            
             scope.$on('book-load', function(e, book) {            
-                element.attr('src', 'covers/' + book.Thumbnail);
+                element.attr('src', config.covers + book.Thumbnail);
             });    
         } 
     };
-});
+}]);
 
 app.directive('init', ['$timeout', function ($timeout) {
     return {
@@ -45,7 +43,6 @@ app.directive('init', ['$timeout', function ($timeout) {
         }
     };
 }]);
-
 
 app.directive('rating', function () {
     return function (scope, element) {
@@ -95,7 +92,7 @@ app.directive('browse', ['nav', function (nav) {
     };
 }]);
 
-app.directive('drop', ['http', function (http) {
+app.directive('drop', ['http', 'config', function (http, config) {
 
     return function (scope, element) {
         element.on('drop', function (e) {
@@ -125,7 +122,7 @@ app.directive('drop', ['http', function (http) {
                 else {
                     file = file.replace(/"/g, "");
                     scope.book.Thumbnail = file;   
-                    element.attr('src', element.attr('source') + file);
+                    element.attr('src', config.covers + file);
                     scope.$apply();
                 }
             }).always(function() {
@@ -142,16 +139,22 @@ app.directive('drop', ['http', function (http) {
     };
 }]);
 
-app.directive('submit', ['http', function (http) {
+app.directive('submit', ['http', 'nav', function (http, nav) {
     return function (scope, element) {
        scope.$on('book-load', function(e, book) {            
-            element.text(book.Id === 0 ? 'Save' : 'Update')
+            var create = book.Id === 0;
+            element.text(create ? 'Save' : 'Update')
             .bind('click', function() {
                 http.put('api/update', scope.book, function(result){
                     if(result === 'false') {
                         error('failed to save the changes');
                     }
-                    else notify('book saved successfully');                
+                    else {
+                        notify('book saved successfully');                
+                        if(create) {
+                            nav.redirect(result);
+                        }
+                    }
                 });
             });
         });       
@@ -168,9 +171,12 @@ app.directive('google', ['http', function (http) {
             }
 
             load();
-            http.get('api/google/' + isbn, function(book){
+            
+            http.get('api/google/' + isbn, function(book) {                                
+                if(book.Thumbnail) {
+                    $('.bookcover').attr('src', book.Thumbnail);
+                }
                 angular.copy(book, scope.book);
-                $('.bookcover').attr('src', book.Thumbnail);
                 scope.$apply(); 
                 load(false);              
             });
