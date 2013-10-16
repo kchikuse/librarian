@@ -91,7 +91,7 @@ function SaveCover() {
 
 function FetchGoogle($isbn){
 	$client = new Google_Client();
-	$client->setDeveloperKey('your key');
+	$client->setDeveloperKey('AIzaSyCC0x-_xpXp-kujqXu53LZwjhfan5w_UTY');
 	$client->setApplicationName("Home_Library");
 	$service = new Google_BooksService($client);
 

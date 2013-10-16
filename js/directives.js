@@ -81,11 +81,11 @@ app.directive('browse', ['nav', function (nav) {
                 var el = $(element).hammer();
 
                 el.on('swipeleft', function() {
-                    nav.redirect(book.Id, 'L');
+                    nav.redirect(book.Id, 'R');
                 });
 
                 el.on('swiperight', function() {
-                    nav.redirect(book.Id, 'R')
+                    nav.redirect(book.Id, 'L')
                 });
             });    
         },    
