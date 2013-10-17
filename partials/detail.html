@@ -40,7 +40,7 @@
 				<div rating></div>
 
 				<div class="row">
-					<div class="description" ng-bind-html-unsafe="book.Description"></div>
+					<div class="description" markdown>{{ book.Description }}</div>
 				</div>
 				
 				<div class="row margin" ng-show="book.Notes">

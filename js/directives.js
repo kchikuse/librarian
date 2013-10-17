@@ -28,7 +28,7 @@ app.directive('init', ['$timeout', function ($timeout) {
     return {
         link: function (scope) {
             scope.$on('books-load', function () {
-                $timeout(initApp, 0, false);
+                $timeout(init, 0, false);
             });
 
             scope.$on('$routeChangeSuccess', function(next, current) { 
@@ -51,8 +51,17 @@ app.directive('rating', function () {
                 number: 5,
                 readOnly: true,
                 score: book.Rating,
-                path: 'assets/raty'                
+                path: 'assets/raty',
+                hints: ['','','','']                
             });
+        });
+    };
+});
+
+app.directive('markdown', function () {
+    return function (scope, element) {
+        scope.$on('book-load', function(e, book) {           
+           element.html( converter.makeHtml( element.text() ) );
         });
     };
 });
@@ -102,16 +111,19 @@ app.directive('drop', ['http', 'config', function (http, config) {
 
             var files = e.originalEvent.dataTransfer.files;
 
-            if (!files.length) return;
+            if (!files.length) {
+                return;
+            }
 
-            if (FormData === undefined) 
+            if (FormData === undefined) {
                 return error("only works with chrome");
+            }
 
             var data = new FormData();
 
             data.append('file', files[0]);
 
-            if (!files[0].name.validCover()) {
+            if (!validCover(files[0].name)) {
                 return error('only an image can be used as a book cover');
             }
 
@@ -143,8 +155,8 @@ app.directive('submit', ['http', 'nav', function (http, nav) {
     return function (scope, element) {
        scope.$on('book-load', function(e, book) {            
             var create = book.Id === 0;
-            element.text(create ? 'Save' : 'Update')
-            .bind('click', function() {
+            element.text(create ? 'Save' : 'Update');
+            element.bind('click', function() {
                 http.put('api/update', scope.book, function(result){
                     if(result === 'false') {
                         error('failed to save the changes');
@@ -165,21 +177,19 @@ app.directive('google', ['http', function (http) {
     return function (scope, element) {        
         element.bind('click', function() {
             var isbn = scope.book.ISBN;
+            
             if(!isbn.length) {
                 $('.isbn').focus();
                 return error('enter an ISBN to search for');
             }
-
-            load();
             
             http.get('api/google/' + isbn, function(book) {                                
                 if(book.Thumbnail) {
                     $('.bookcover').attr('src', book.Thumbnail);
                 }
                 angular.copy(book, scope.book);
-                scope.$apply(); 
-                load(false);              
-            });
+                scope.$apply();               
+            }, true);
         });     
     };
 }]);

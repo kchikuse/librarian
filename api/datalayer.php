@@ -81,11 +81,10 @@ function SaveCover() {
     $size = $_FILES['file']['size'];
 
     if($size > 0 && is_legal_file($name)) {
-      $file = gen_file( $name );
+      $file = gen_file( $name );      
       move_uploaded_file( $tmp, '../covers/'. $file );
       return $file;
     }
-
     return false;
 }
 
@@ -104,8 +103,9 @@ function FetchGoogle($isbn){
 	$volumes = $service->volumes;
 	$results = $volumes->listVolumes('isbn:' . $isbn, $params);
 
-    if(!array_key_exists('items', $results))
+    if(!array_key_exists('items', $results)) {
     	return array();
+    }
 
 	$info = $results['items'][0]['volumeInfo'];
 	return array (
@@ -113,16 +113,15 @@ function FetchGoogle($isbn){
 		'Rating' => 0,
         'ISBN' => $isbn,  
         'HasRead' => false,    
-        'Title' => element('title', $info),  
-        'Subtitle'  => element('subtitle', $info),           
-        'PageCount' =>element('pageCount', $info),              
-        'Publisher' => element('publisher', $info),         
-        'Author' => element('authors', $info, true),
-        'Genre'  => element('categories', $info, true),
-        'Description' => element('description', $info),           
-        'DatePublished' => element('publishedDate', $info),
-        'Thumbnail' => array_key_exists('imageLinks', $info) ? 
-        				element('thumbnail', $info['imageLinks']) : ''
+        'Title' => el('title', $info),  
+        'Subtitle'  => el('subtitle', $info),           
+        'PageCount' =>el('pageCount', $info),              
+        'Publisher' => el('publisher', $info),         
+        'Author' => el('authors', $info, true),
+        'Genre'  => el('categories', $info, true),
+        'Description' => el('description', $info),           
+        'DatePublished' => el('publishedDate', $info),
+        'Thumbnail' => array_key_exists('imageLinks', $info) ? el('thumbnail', $info['imageLinks']) : ''
 	);
 }
 

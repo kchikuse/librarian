@@ -1,6 +1,6 @@
 <?php
 
-function send_json($data) {
+function sendJson($data) {
 	echo json_encode( $data, JSON_NUMERIC_CHECK );
 }
 
@@ -8,8 +8,8 @@ function put(& $src, $key) {
 	return trim ( $src->put($key) ) ?: '';
 }
 
-function element($item, $array, $implode = false) {
-    if ( ! isset($array[$item]) OR $array[$item] == '') {
+function el($item, $array, $implode = false) {
+    if ( ! isset($array[$item]) || $array[$item] == '') {
         return '';
     }
 

@@ -10,8 +10,8 @@
 }
 /* CSS reset */
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { 
-	margin:0;
-	padding:0;
+/*	margin:0;
+	padding:0;*/
 }
 html,body {
 	margin:0;
@@ -30,9 +30,9 @@ address,caption,cite,code,dfn,th,var {
 	font-style:normal;
 	font-weight:normal;
 }
-ol,ul {
+/*ol,ul {
 	list-style:none;
-}
+}*/
 caption,th {
 	text-align:left;
 }
@@ -163,8 +163,8 @@ input[type="number"] {
     width: 80px;
 }
 textarea {
-	width: 500px;
-	height: 128px;
+	width: 650px;
+	height: 280px;
 }
 	textarea.notes {
 		height: 50px;
@@ -214,11 +214,11 @@ select {
 	}
 	.row div:first-child {
 	 	min-width: 100px;
-	 	max-width: 470px;
+	 	/*max-width: 470px;*/
 	 	vertical-align: top;
 	}
 	.row .description {
-	  	white-space: pre-line;
+	  /*	white-space: pre-line;*/
 	}
 	.row .notes { 
 		color: #0B470B;
@@ -260,4 +260,12 @@ select {
 	position:fixed !important;
 	top:50%;
 	left:50%;
+}
+
+.description p {
+
+}
+
+.description ul, .description ol {
+
 }
