@@ -1,10 +1,9 @@
 RewriteEngine On
-
-# Some hosts may require you to use the `RewriteBase` directive.
-# If you need to use the `RewriteBase` directive, it should be the
-# absolute physical path to the directory that contains this htaccess file.
-#
-# RewriteBase /
-
 RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php [QSA,L]
+
+Header add Access-Control-Allow-Origin "*"
+Header add Access-Control-Allow-Headers "Content-Type"
+Header add Access-Control-Allow-Methods "GET, POST, OPTIONS"
+Header add Content-Type "application/json"

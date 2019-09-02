@@ -1,5 +1,5 @@
 ﻿app.controller('ListCtrl', ['$scope', 'nav', 'http', function($scope, nav, http) {
-    http.get('api', function(books){    	
+    http.get('api/', function(books){    	
         nav.saveBooks(books);
         $scope.books = books;  
         $scope.$apply();        

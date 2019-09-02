@@ -62,6 +62,7 @@ class Slim_Session_Handler_Cookies extends Slim_Session_Handler {
 
     public function destroy( $id ) {
         $this->app->deleteCookie($id);
+        return true;
     }
 
     public function gc( $maxLifetime ) {

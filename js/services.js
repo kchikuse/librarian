@@ -33,11 +33,13 @@
 
 
 app.factory('http', function () {
+    var api = "https://chikuse.co.za/librarian/";
+
     return {
 
       put: function(url, data, callback) {
         return $.ajax({            
-            url: url,
+            url: api + url,
             data: data, 
             type: 'PUT',             
             success: callback
@@ -46,7 +48,7 @@ app.factory('http', function () {
 
        get: function(url, callback, loading) {
         return $.ajax({           
-            url: url,  
+            url: api + url,  
             type: 'GET',     
             dataType: 'json',        
             success: callback,
@@ -61,7 +63,7 @@ app.factory('http', function () {
 
       post: function(url, data, callback) {
        return $.ajax({            
-            url: url,
+            url: api + url,
             data: data, 
             type: 'POST',             
             success: callback,
